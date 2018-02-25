@@ -44,9 +44,10 @@ import requests
 serverURL = 'http://mobius.uwhealth.wisc.edu/'
 limit = 99999
 
-# Prompt user for username, password
+# Prompt user for username, password, machine
 username = raw_input('Enter Mobius3D username: ')
 password = raw_input('Enter password: ')
+machine = raw_input('Enter machine name (leave empty to scan all): ')
 
 # Authenticate against Mobius3D server
 s = requests.Session()
@@ -102,7 +103,7 @@ for patient in patientList['patients']:
             for group, group_dict in planData['data']['fractionGroup_info']\
                     ['fractionGroup_num2info_dict'].items():
     
-                if 'TrueBeam' not in group_dict['TreatmentMachineName']:
+                if machine != '' and machine not in group_dict['TreatmentMachineName']:
                     continue
         
                 for beams, beam_dict in group_dict['beam_num2info_dict'].items():            
